@@ -1,0 +1,49 @@
+version: "3.7"
+
+networks:
+  kong-net:
+    name: kong-net
+    driver: bridge
+
+services:
+  servicea:
+    image: node:14
+    volumes:
+      - ./service:/srv/service
+    environment:
+      CONTENT: 'Service A'
+    entrypoint: node /srv/service/server.js
+    ports:
+      - 8081:8083
+    expose:
+      - 8083
+    networks:
+      - kong-net
+
+  serviceb:
+    image: node:14
+    volumes:
+      - ./service:/srv/service
+    environment:
+      CONTENT: 'Service B'
+    entrypoint: node /srv/service/server.js
+    ports:
+      - 8082:8083
+    expose:
+      - 8083
+    networks:
+      - kong-net
+
+  servicec:
+    image: node:14
+    volumes:
+      - ./service:/srv/service
+    environment:
+      CONTENT: 'Service C'
+    entrypoint: node /srv/service/server.js
+    ports:
+      - 8083:8083
+    expose:
+      - 8083
+    networks:
+      - kong-net
